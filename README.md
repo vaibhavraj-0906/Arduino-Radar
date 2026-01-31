@@ -1,88 +1,84 @@
-Obstacle Avoiding Robot Car using Arduino
-Description
-This project implements an autonomous obstacle-avoiding robot car using an Arduino microcontroller, an ultrasonic distance sensor, a servo motor, and an L298N motor driver. The robot scans its surroundings using a servo-mounted ultrasonic sensor and makes real-time movement decisions to avoid obstacles without human intervention.
+Ultrasonic Radar System using Arduino and Processing
+Project Description
+This project implements a real-time ultrasonic radar system using an Arduino, an HC-SR04 ultrasonic sensor, a servo motor, and a Processing-based graphical interface. The ultrasonic sensor scans the environment by rotating on a servo motor, while Processing visualizes detected objects in a radar-style display.
 
-Working Principle
-The ultrasonic sensor is mounted on a servo motor that sweeps across multiple predefined angles. At each angle, the distance to nearby objects is measured and stored. If any obstacle is detected within a threshold distance of 30 cm, the robot performs an avoidance maneuver; otherwise, it continues moving forward.
-A motor test routine runs at startup to verify proper motor operation and wiring.
+System Overview
+The Arduino controls the servo motor to rotate the ultrasonic sensor between 15° and 165°. At each angle, the distance to nearby objects is measured and transmitted over serial communication. The Processing application receives this data and renders a live radar visualization showing object position and distance.
 
 Components Used
-Arduino Uno
-HC-SR04 Ultrasonic Sensor
-Servo Motor (SG90 or equivalent)
-L298N Motor Driver
-Two DC Motors
-Robot Chassis
-Jumper Wires
-External Power Supply / Battery Pack
+Hardware
+  Arduino Uno
+  HC-SR04 Ultrasonic Sensor
+  Servo Motor (SG90 or equivalent)
+  Jumper Wires
+  USB Cable
+Software
+Arduino IDE
+Processing IDE
 
-Pin Configuration
+Pin Configuration (Arduino)
+| Component       | Arduino Pin |
+| --------------- | ----------- |
+| Ultrasonic Trig | 10          |
+| Ultrasonic Echo | 11          |
+| Servo Signal    | 12          |
 
-Ultrasonic Sensor
-| Signal | Arduino Pin |
-| ------ | ----------- |
-| Trig   | 13          |
-| Echo   | 12          |
+Working Principle
+The servo motor rotates the ultrasonic sensor from 15° to 165° and back.
+At each angle, the ultrasonic sensor measures distance using time-of-flight.
+Arduino sends angle and distance data via serial communication.
+Processing reads the data and plots it on a radar-style GUI.
+Objects within 40 cm are highlighted on the radar display.
 
-Servo Motor
-| Signal  | Arduino Pin |
-| ------- | ----------- |
-| Control | 11          |
+Data Format (Serial Communication)
+The Arduino sends data in the following format:
+  angle,distance.
+Example:
+  90,23.
+angle → Servo angle in degrees
+distance → Measured distance in centimeters
 
-L298N Motor Driver
-| Motor | Enable Pin | Direction Pins   |
-| ----- | ---------- | ---------------- |
-| Left  | 6          | IN1 = 7, IN2 = 5 |
-| Right | 3          | IN3 = 4, IN4 = 2 |
-
-Sensor Sweep Configuration
-The ultrasonic sensor scans the environment at the following angles:
-60°, 70°, 80°, 90°, 100°, 110°, 120°
-
-This provides a wide forward field of view for obstacle detection.
-
-Key Features
-Servo-based ultrasonic scanning
-Real-time obstacle detection
-Independent control of left and right motors
-PWM-based speed control
-Automatic obstacle avoidance
-Motor diagnostic test on startup
-
-Distance Measurement
-Distance is calculated using ultrasonic time-of-flight
-Speed of sound assumed: 343 m/s
-Distance output is in millimeters
-Timeout handling returns a maximum distance of 4000 mm
+Radar Visualization (Processing)
+  Green arcs represent distance ranges (10 cm to 40 cm)
+  A rotating sweep line shows the current sensor angle
+  Red markers indicate detected objects
+  Live angle and distance values are displayed on screen
 
 Setup Instructions
-Hardware Setup
-  Assemble the robot chassis.
-  Connect DC motors to the L298N motor driver.
-  Mount the ultrasonic sensor on the servo motor.
-  Connect all components according to the pin configuration table.
-Software Setup
-  Install the Arduino IDE.
-  Ensure the Servo.h library is available.
-  Upload the provided Arduino sketch to the board.
-Execution
-  Power on the robot.
-  Observe the motor test routine.
-  The robot will begin autonomous navigation.
+Arduino
+  Connect the ultrasonic sensor and servo motor according to the pin configuration.
+  Upload the Arduino sketch to the board.
+  Open the Serial Monitor and verify data output at 9600 baud.
+Processing
+  Open the Processing sketch.
+  Update the serial port name (e.g., COM5) if required.
+  Run the sketch to view the radar visualization.
+  
+Adjustable Parameters
+  Servo sweep range: 15° – 165°
+  Maximum detection range: 40 cm
+  Serial baud rate: 9600
+  Screen resolution: 1200 × 700
 
-Possible Enhancements
-Implement PID-based motor control
-Use weighted angle-based decision logic
-Add Bluetooth or Wi-Fi control
-Integrate additional sensors (IR, line sensors)
-Log sensor data for analysis
+Applications
+  Object detection and ranging
+  Robotics and navigation systems
+  Basic radar simulation
+  Embedded systems and IoT learning projects
 
 Learning Outcomes
-Arduino and Embedded C programming
-Motor control using L298N
-Servo and ultrasonic sensor integration
-Real-time decision-making in robotics
-Debugging hardware–software systems
+  Arduino sensor interfacing
+  Servo motor control
+  Serial communication
+  Real-time data visualization using Processing
+  Coordinate transformation and trigonometry
+
+Possible Enhancements
+  Increase detection range
+  Add obstacle classification
+  Improve visualization scaling
+  Integrate wireless communication
+  Convert Processing UI to Python or Web-based visualization
 
 Author
 Raj
